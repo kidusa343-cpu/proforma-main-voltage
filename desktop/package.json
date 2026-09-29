@@ -1,0 +1,79 @@
+{
+  "name": "voltage_auto",
+  "version": "1.0.0",
+  "description": "This is a advanced application to handle and manage spare part company proforma",
+  "main": "main.js",
+  "scripts": {
+    "postinstall": "electron-builder install-app-deps",
+    "build-next": "cd frontend && npm install && npm run build",
+    "rebuild": "electron-rebuild -f -w sqlite3,bcrypt",
+    "pre-dist": "echo Creating staging directory... & mkdir staging\\node_modules 2>nul & echo Copying node_modules... & xcopy frontend\\node_modules staging\\node_modules /E /I /Y",
+    "post-dist": "if exist dist\\win-unpacked\\resources\\app\\frontend\\node_modules (echo Frontend node_modules exists) else (echo Frontend node_modules missing & exit /b 1)",
+    "dist": "npm run pre-dist && electron-builder && npm run post-dist",
+    "start": "electron . --disable-http-cache",
+    "test-prod": "cross-env PRODUCTION=true electron ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "cross-env": "^7.0.3",
+    "electron": "^35.0.0",
+    "electron-builder": "^25.1.8",
+    "electron-packager": "^17.1.2"
+  },
+  "dependencies": {
+    "axios": "^1.8.1",
+    "bcrypt": "^5.1.1",
+    "better-sqlite3": "^11.9.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "electron-is-dev": "^3.0.1",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "next": "^15.2.1-canary.4",
+    "sqlite3": "^5.1.6"
+  },
+  "build": {
+    "appId": "com.example.fastproforma",
+    "productName": "Fast-Proforma",
+    "asar": false,
+    "win": {
+      "target": "nsis",
+      "icon": "assets/icons/win/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true
+    },
+    "files": [
+      "backend/**/*",
+      "config/**/*",
+      "main.js",
+      "preload.js",
+      "backup.js",
+      "frontend/**/*",
+      "frontend/.next/**/*",
+      "frontend/node_modules/**/*"
+    ],
+    "extraResources": [
+      {
+        "from": "resources",
+        "to": "resources"
+      }
+    ],
+    "extraFiles": [
+      {
+        "from": "staging/node_modules/",
+        "to": "frontend/node_modules/",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "nodeGypRebuild": false,
+    "npmRebuild": false
+  }
+}

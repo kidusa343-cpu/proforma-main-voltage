@@ -1,0 +1,42 @@
+POST http://localhost:3000/api/proforma
+Content-Type: application/json
+
+{
+  "proformaNumber": "PRF-2025/02/79-003",
+  "customerName": "Zemen Insurance",
+  "plateNumber": "03-823528AA",
+  "vin": "LGXEXL4CRO227320",
+  "model": "BYD Seagull",
+  "referenceNumber": "V0012",
+  "deliveryTime": "3 Days",
+  "preparedBy": "Biniam Abebe Kassaye",
+  "items": [
+    {
+      "itemName": "Thunder DDP Glass Down",
+      "unit": "pcs",
+      "quantity": 1,
+      "unitPrice": 500
+    },
+    {
+      "itemName": "Rear License Light Holder",
+      "unit": "pcs",
+      "quantity": 2,
+      "unitPrice": 150
+    }
+  ]
+}
+###
+GET http://localhost:3000/api/proformas
+###
+GET http://localhost:3000/api/proforma/6
+###
+GET http://localhost:3000/api/proforma/2/pdf
+###
+DELETE http://localhost:3000/api/Deleteproformas/6
+###
+PUT http://localhost:3000/api/Updateproforma/2
+Content-Type: application/json
+
+{
+  "customerName": "SAMUEL KEBEDE"
+}
